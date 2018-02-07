@@ -4,7 +4,7 @@
     #player {
       --theme-hue: 100;
       --progress-color: rgb(0, 255, 0);
-      --splash-image: url('splash-image.png');
+      --splash-image: url('splash-image.png?a=b');
       --progress-color: hsl(180, 50%, 50%);
     }
   </style>
@@ -17,7 +17,7 @@
   <script>
     cast.framework.CastReceiverContext.getInstance().start();
     let playerElement = document.getElementById('player');
-    playerElement.style.setProperty('--splash-image', 'url("splash-image.png")');
+    playerElement.style.setProperty('--splash-image', 'url("splash-image.png?a=b")');
   </script>
 </body>
 
