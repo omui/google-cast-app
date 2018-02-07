@@ -4,7 +4,7 @@
     #player {
       --theme-hue: 100;
       --progress-color: rgb(0, 255, 0);
-      --splash-image: url('http://via.placeholder.com/700?text=Splace%20Image.jpg');
+      --splash-image: url('http://via.placeholder.com/700?text=Splash%20Image.jpg');
       --watermark-image: url('http://via.placeholder.com/700?text=Watermark%20Image.jpg');
       --buffering-image: url('http://via.placeholder.com/700?text=Buffering%20Image.jpg');
       --pause-image: url('http://via.placeholder.com/700?text=Pause%20Image.jpg');
@@ -52,7 +52,7 @@
         initialize(loadRequestData) {
             const media = loadRequestData.media;
             const items = [];
-            items.push(myCreateItem(media)); // your custom function logic
+            //items.push(myCreateItem(media)); // your custom function logic
 
             const queueData = new cast.framework.messages.QueueData();
             queueData.items = items;
@@ -60,9 +60,9 @@
             return queueData;
         }
 
-        nextItems(itemId) {
+        /*nextItems(itemId) {
            return [myCreateNextItem()]; // your custom function logic
-        }
+        }*/
     };
 
     const playbackConfig = new cast.framework.PlaybackConfig();
