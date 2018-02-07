@@ -4,7 +4,7 @@
     #player {
       --theme-hue: 100;
       --progress-color: rgb(0, 255, 0);
-      --splash-image: url('https://via.placeholder.com/700?text=Slike%20Player');
+      --splash-image: url('splash-image.png');
       --progress-color: hsl(180, 50%, 50%);
     }
   </style>
@@ -15,7 +15,10 @@
 <body>
   <cast-media-player id="player"></cast-media-player>
   <script>
+    window.location.reload(true);
     cast.framework.CastReceiverContext.getInstance().start();
+    let playerElement = document.getElementById('player');
+    playerElement.style.setProperty('--splash-image', 'url("splash-image.png")');
   </script>
 </body>
 
