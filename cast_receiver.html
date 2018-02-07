@@ -48,7 +48,7 @@
           console.log("CHROMECAST EVENT ",event);
         });
 
-    const MyCastQueue = class extends cast.framework.QueueBase {
+    /*const MyCastQueue = class extends cast.framework.QueueBase {
         initialize(loadRequestData) {
             const media = loadRequestData.media;
             const items = [];
@@ -60,10 +60,10 @@
             return queueData;
         }
 
-        /*nextItems(itemId) {
+        nextItems(itemId) {
            return [myCreateNextItem()]; // your custom function logic
-        }*/
-    };
+        }
+    };*/
 
     const playbackConfig = new cast.framework.PlaybackConfig();
 
