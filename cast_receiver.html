@@ -1,18 +1,19 @@
 <html>
+
 <head>
   <style>
-    #player {
-      --theme-hue: 100;
-      --progress-color: rgb(0, 255, 0);
-      --splash-image: url('http://via.placeholder.com/700?text=Splash%20Image.jpg');
-      --watermark-image: url('http://via.placeholder.com/700?text=Watermark%20Image.jpg');
-      --buffering-image: url('http://via.placeholder.com/700?text=Buffering%20Image.jpg');
-      --pause-image: url('http://via.placeholder.com/700?text=Pause%20Image.jpg');
-      --play-image: url('http://via.placeholder.com/700?text=Play%20Image.jpg');
-      --logo-image: url('logo.png?a=d');
-      --spinner-image: url('ajax-loader.gif?a=c');
-      --progress-color: hsl(180, 50%, 50%);
-    }
+  #player {
+    --theme-hue: 100;
+    --progress-color: rgb(0, 255, 0);
+    --splash-image: url('http://via.placeholder.com/700?text=Splash%20Image.jpg');
+    --watermark-image: url('http://via.placeholder.com/700?text=Watermark%20Image.jpg');
+    --buffering-image: url('http://via.placeholder.com/700?text=Buffering%20Image.jpg');
+    --pause-image: url('http://via.placeholder.com/700?text=Pause%20Image.jpg');
+    --play-image: url('http://via.placeholder.com/700?text=Play%20Image.jpg');
+    --logo-image: url('logo.png?a=d');
+    --spinner-image: url('ajax-loader.gif?a=c');
+    --progress-color: hsl(180, 50%, 50%);
+  }
   </style>
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js">
   </script>
@@ -21,32 +22,72 @@
 <body>
   <cast-media-player></cast-media-player>
   <script>
-    const context = cast.framework.CastReceiverContext.getInstance();
-    const playerManager = context.getPlayerManager();
+  const context = cast.framework.CastReceiverContext.getInstance();
+  const playerManager = context.getPlayerManager();
 
-    // intercept the LOAD request to be able to read in a contentId and get data
-    /*playerManager.setMessageInterceptor(
-        cast.framework.messages.MessageType.LOAD, loadRequestData => {
-            if (loadRequestData.media && loadRequestData.media.contentId) {
-                return thirdparty.getMediaById(loadRequestData.media.contentId)
-                .then(media => {
-                  if (media) {
-                    loadRequestData.media.contentUrl = media.url;
-                    loadRequestData.media.contentType = media.contentType;
-                    loadRequestData.media.metadata = media.metadata;
-                  }
-                  return loadRequestData;
-                });
-            }
-            return loadRequestData;
-        });*/
+  // intercept the LOAD request to be able to read in a contentId and get data
+  /*playerManager.setMessageInterceptor(
+      cast.framework.messages.MessageType.LOAD, loadRequestData => {
+          if (loadRequestData.media && loadRequestData.media.contentId) {
+              return thirdparty.getMediaById(loadRequestData.media.contentId)
+              .then(media => {
+                if (media) {
+                  loadRequestData.media.contentUrl = media.url;
+                  loadRequestData.media.contentType = media.contentType;
+                  loadRequestData.media.metadata = media.metadata;
+                }
+                return loadRequestData;
+              });
+          }
+          return loadRequestData;
+      });*/
 
-    // listen to all Core Events
-    playerManager.addEventListener(cast.framework.events.category.CORE,
-        event => {
-            console.log("CHROMECAST : ",event);
-        });
-    context.start();
+  // listen to all Core Events
+  playerManager.addEventListener(cast.framework.events.category.CORE,
+    event => {
+      console.log("CHROMECAST : ", event);
+    });
+
+  function addBreakToMedia(media) {
+    media.breakClips = [{
+        id: 'bc1',
+        title: thirdparty.getBreakClipTitle(),
+        contentId: thirdparty.getBreakClipUrl(),
+        contentType: thirdparty.getBreakClipContentType(),
+        posterUrl: thirdparty.getBreakClipPosterUrl(),
+        whenSkippable: 10
+      },
+      {
+        id: 'bc2'
+          ...
+      },
+      {
+        id: 'bc3'
+          ...
+      }
+    ];
+    media.breaks = [{
+        id: 'b1',
+        breakClipIds: ['bc1', 'bc2'],
+        position: thirdparty.getBreakClipPosition()
+      },
+      {
+        id: 'b2',
+        breakClipIds: ['bc1', 'bc3'],
+        position: thirdparty.getBreakClipPosition()
+      }
+    ];
+  }
+
+
+  playerManager.setMessageInterceptor(
+    cast.framework.messages.MessageType.LOAD,
+    request => {
+      console.log("request.media = ",request.media);
+      //addBreakToMedia(request.media);
+      return request;
+    });
+  context.start();
   </script>
 </body>
 
