@@ -65,13 +65,12 @@
       }
     ];
   }
-
-
   playerManager.setMessageInterceptor(
     cast.framework.messages.MessageType.LOAD,ert
     request => {
-      //alert("request.media = ",request.media);
+      console.log("request.media = ",request.media);
       addBreakToMedia(request.media);
+      console.log("request.media = ",request.media);
       return request;
     });
   context.start();
