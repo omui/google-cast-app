@@ -25,7 +25,7 @@
     const playerManager = context.getPlayerManager();
 
     // intercept the LOAD request to be able to read in a contentId and get data
-    playerManager.setMessageInterceptor(
+    /*playerManager.setMessageInterceptor(
         cast.framework.messages.MessageType.LOAD, loadRequestData => {
             if (loadRequestData.media && loadRequestData.media.contentId) {
                 return thirdparty.getMediaById(loadRequestData.media.contentId)
@@ -39,7 +39,7 @@
                 });
             }
             return loadRequestData;
-        });
+        });*/
 
     // listen to all Core Events
     playerManager.addEventListener(cast.framework.events.category.CORE,
