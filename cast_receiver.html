@@ -74,14 +74,16 @@
         addBreakToMedia(request.media);
         console.log("request.media = ", request.media);
         return request;
-      });
+      }
+    );
 
-    playerManager.setMessageInterceptor(
-      cast.framework.messages.MessageType.ERROR,
-      request => {
-        debugger;
-        return request;
-      });
+    // playerManager.setMessageInterceptor(
+    //   cast.framework.messages.MessageType.ERROR,
+    //   request => {
+    //     debugger;
+    //     return request;
+    //   }
+    // );
     context.start();
   </script>
 </body>
