@@ -50,6 +50,11 @@
       console.log("CHROMECAST : ", event);
     });
 
+  playerManager.addEventListener(cast.framework.events.category.ERROR,
+    event => {
+      console.log("ERROR MSG : ", event);
+    });
+
   function addBreakToMedia(media) {
     media.breakClips = [{
         id: "bc1",
@@ -70,6 +75,7 @@
   playerManager.setMessageInterceptor(
     cast.framework.messages.MessageType.LOAD,
     request => {
+      console.log('ERROR NAME', cast.framework.messages.MessageType.ERROR);
       console.log("request.media = ",request.media);
       addBreakToMedia(request.media);
       console.log("request.media = ",request.media);
@@ -79,12 +85,6 @@
     cast.framework.messages.MessageType.SEEK,
     request => {
       console.log("request.media = ",request.media);
-      return request;
-    });
-  playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.ERROR,
-    request => {
-      console.log('error method', request);
       return request;
     });
   context.start();
