@@ -81,10 +81,10 @@
       console.log("request.media = ",request.media);
       return request;
     });
-    playerManager.setMessageInterceptor(
+  playerManager.setMessageInterceptor(
     cast.framework.messages.MessageType.ERROR,
     request => {
-      debugger;
+      console.log('error method', request);
       return request;
     });
   context.start();
