@@ -2,18 +2,18 @@
 
 <head>
   <style>
-  #player {
-    --theme-hue: 100;
-    --progress-color: rgb(0, 255, 0);
-    --splash-image: url('http://via.placeholder.com/700?text=Splash%20Image.jpg');
-    --watermark-image: url('http://via.placeholder.com/700?text=Watermark%20Image.jpg');
-    --buffering-image: url('http://via.placeholder.com/700?text=Buffering%20Image.jpg');
-    --pause-image: url('http://via.placeholder.com/700?text=Pause%20Image.jpg');
-    --play-image: url('http://via.placeholder.com/700?text=Play%20Image.jpg');
-    --logo-image: url('logo.png?a=d');
-    --spinner-image: url('ajax-loader.gif?a=c');
-    --progress-color: hsl(180, 50%, 50%);
-  }
+    #player {
+      --theme-hue: 100;
+      --progress-color: rgb(0, 255, 0);
+      --splash-image: url('http://via.placeholder.com/700?text=Splash%20Image.jpg');
+      --watermark-image: url('http://via.placeholder.com/700?text=Watermark%20Image.jpg');
+      --buffering-image: url('http://via.placeholder.com/700?text=Buffering%20Image.jpg');
+      --pause-image: url('http://via.placeholder.com/700?text=Pause%20Image.jpg');
+      --play-image: url('http://via.placeholder.com/700?text=Play%20Image.jpg');
+      --logo-image: url('logo.png?a=d');
+      --spinner-image: url('ajax-loader.gif?a=c');
+      --progress-color: hsl(180, 50%, 50%);
+    }
   </style>
   <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
 
@@ -24,34 +24,34 @@
 <body>
   <cast-media-player></cast-media-player>
   <script>
-  const context = cast.framework.CastReceiverContext.getInstance();
-  const playerManager = context.getPlayerManager();
+    const context = cast.framework.CastReceiverContext.getInstance();
+    const playerManager = context.getPlayerManager();
 
-  // intercept the LOAD request to be able to read in a contentId and get data
-  /*playerManager.setMessageInterceptor(
-      cast.framework.messages.MessageType.LOAD, loadRequestData => {
-          if (loadRequestData.media && loadRequestData.media.contentId) {
-              return thirdparty.getMediaById(loadRequestData.media.contentId)
-              .then(media => {
-                if (media) {
-                  loadRequestData.media.contentUrl = media.url;
-                  loadRequestData.media.contentType = media.contentType;
-                  loadRequestData.media.metadata = media.metadata;
-                }
-                return loadRequestData;
-              });
-          }
-          return loadRequestData;
-      });*/
+    // intercept the LOAD request to be able to read in a contentId and get data
+    /*playerManager.setMessageInterceptor(
+        cast.framework.messages.MessageType.LOAD, loadRequestData => {
+            if (loadRequestData.media && loadRequestData.media.contentId) {
+                return thirdparty.getMediaById(loadRequestData.media.contentId)
+                .then(media => {
+                  if (media) {
+                    loadRequestData.media.contentUrl = media.url;
+                    loadRequestData.media.contentType = media.contentType;
+                    loadRequestData.media.metadata = media.metadata;
+                  }
+                  return loadRequestData;
+                });
+            }
+            return loadRequestData;
+        });*/
 
-  // listen to all Core Events
-  playerManager.addEventListener(cast.framework.events.category.CORE,
-    event => {
-      console.log("CHROMECAST : ", event);
-    });
+    // listen to all Core Events
+    playerManager.addEventListener(cast.framework.events.category.CORE,
+      event => {
+        console.log("CHROMECAST : ", event);
+      });
 
-  function addBreakToMedia(media) {
-    media.breakClips = [{
+    function addBreakToMedia(media) {
+      media.breakClips = [{
         id: "bc1",
         title: "HELLOO",
         contentId: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=",
@@ -59,29 +59,30 @@
         posterUrl: "http://via.placeholder.com/700?text=AD%20Image.jpg",
         whenSkippable: 10
       },
-    ];
-    media.breaks = [{
+      ];
+      media.breaks = [{
         id: 'b1',
         breakClipIds: ["bc1"],
         position: 3
       }
-    ];
-  }
-  playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.LOAD,
-    request => {
-      console.log("request.media = ",request.media);
-      addBreakToMedia(request.media);
-      console.log("request.media = ",request.media);
-      return request;
-    });
-  playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.SEEK,
-    request => {
-      console.log("request.media = ",request.media);
-      return request;
-    });
-  context.start();
+      ];
+    }
+    playerManager.setMessageInterceptor(
+      cast.framework.messages.MessageType.LOAD,
+      request => {
+        console.log("request.media = ", request.media);
+        addBreakToMedia(request.media);
+        console.log("request.media = ", request.media);
+        return request;
+      });
+
+    playerManager.setMessageInterceptor(
+      cast.framework.messages.MessageType.ERROR,
+      request => {
+        debugger;
+        return request;
+      });
+    context.start();
   </script>
 </body>
 
