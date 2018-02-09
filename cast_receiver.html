@@ -57,6 +57,7 @@
         contentId: "https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=",
         contentType: "video/mp4; codecs='avc1.640029, mp4a.40.5'",
         posterUrl: "//via.placeholder.com/700?text=AD%20Image.jpg",
+        contentUrl:"https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=",
         whenSkippable: 10
       },
     ];
@@ -73,12 +74,6 @@
       console.log('MessageType', cast.framework.messages.MessageType);
       console.log("request.media = ",request.media);
       addBreakToMedia(request.media);
-      console.log("request.media = ",request.media);
-      return request;
-    });
-  playerManager.setMessageInterceptor(
-    cast.framework.messages.MessageType.SEEK,
-    request => {
       console.log("request.media = ",request.media);
       return request;
     });
